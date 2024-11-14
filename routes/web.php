@@ -6,6 +6,7 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -86,3 +87,19 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
+
+
+// 
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('admin/products', App\Http\Controllers\Base\Tables\Admin\TableController::class);
+});
+
+Route::middleware(['auth', 'role:cliente'])->group(function () {
+    Route::get('productos', [App\Http\Controllers\Base\Tables\Cliente\TableController::class, 'index']);
+});
+
+
+Route::get('/tables', [UserController::class, 'index'])->name('tables.index');
+Route::get('/tables/{table}', [UserController::class, 'edit'])->name('tables.edit');
+
