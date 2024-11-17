@@ -90,16 +90,19 @@ Route::get('/login', function () {
 
 
 // 
-
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('admin/products', App\Http\Controllers\Base\Tables\Admin\TableController::class);
+// Rutas para clientes
+Route::middleware(['role:Cliente'])->group(function () {
+    // Route::get('/cliente/dashboard', [ClienteController::class, 'dashboard']);
+    // Route::get('/cliente/perfil', [ClienteController::class, 'perfil']);
 });
 
-Route::middleware(['auth', 'role:cliente'])->group(function () {
-    Route::get('productos', [App\Http\Controllers\Base\Tables\Cliente\TableController::class, 'index']);
+// Rutas para administradores
+Route::middleware(['role:Admin'])->group(function () {
+    // Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    // Route::get('/admin/usuarios', [AdminController::class, 'usuarios']);
 });
 
-
-Route::get('/tables', [UserController::class, 'index'])->name('tables.index');
-Route::get('/tables/{table}', [UserController::class, 'edit'])->name('tables.edit');
-
+// Rutas para trabajadores
+Route::middleware(['role:trabajador'])->group(function () {
+    // Route::get('/trabajador/dashboard', [TrabajadorController::class, 'dashboard']);
+});
