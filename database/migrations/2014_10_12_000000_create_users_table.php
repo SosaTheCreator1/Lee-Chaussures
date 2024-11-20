@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('location')->nullable();
             $table->string('about_me')->nullable();
             $table->enum('userType', ['Cliente','Trabajador','Administrador'])->default('Cliente');
-            $table->string('status')->nullable();
+            $table->string('status')->nullable()->default('Online');
             $table->rememberToken();
             $table->timestamps();
         });

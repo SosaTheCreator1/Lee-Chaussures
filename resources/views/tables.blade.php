@@ -14,39 +14,30 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Nombre(s) /
-                                                Apellido(s)</th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Rol</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Estatus
-                                            </th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Con
-                                                nosotros desde:</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Acciones
-                                            </th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre(s) / Apellido(s)</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Correo</th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Telefono</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estatus</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Con nosotros desde:</th>
+                                            <th class="text text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($tables as $user)
+                                        @foreach ($employeesAndAdmins as $user)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
-                                                            <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
+                                                            <p class="text-xs text-secondary mb-0">{{ $user->lastName }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $user->rol }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $user->phone }}</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <span
@@ -58,12 +49,10 @@
                                                     <span
                                                         class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/y') }}</span>
                                                 </td>
-                                                <td class="align-middle">
-                                                    <a href="{{ route('tables.edit', $user->id) }}"
-                                                        class="text-secondary font-weight-bold text-xs"
-                                                        data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
-                                                    </a>
+                                                <td class="align">
+                                                    <a href="{{ route('tables', $user->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> Edit</a>
+                                                    <a href="" class="text-secondary font-weight-bold text-xs">   |   </a>
+                                                    <a class="text-secondary font-weight-bold text-xs"> Eliminar</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -85,24 +74,26 @@
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Nombre</th>
+                                            <th class="text text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Apellido</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                class="text text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Correo</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                class="text text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Estatus</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Con nosotros desde:</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                class="text text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($tablesC as $client)
+                                    @foreach ($clients as $client)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
@@ -112,18 +103,27 @@
                                                 </div>
                                             </td>
                                             <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <p class="mb-0 text-sm">{{ $client->lastName }}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $client->email }}</p>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm {{ $user->status ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">
-                                                {{ $user->status ? 'Online' : 'Offline' }}>
+                                            <td class="align-middle text text-sm">
+                                                <span class="badge badge-sm {{ $client->status ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">
+                                                {{ $client->status ? 'Online' : 'Offline' }}
                                                 </span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/y') }}</span>
+                                                <span class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($client->created_at)->format('d/m/y') }}</span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('tables.edit', $user->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> Editar</a>
+                                                <a href="{{ route('tables', $client->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> Editar</a>
+                                                <a href="" class="text-secondary font-weight-bold text-xs">   |   </a>
+                                                <a class="text-secondary font-weight-bold text-xs"> Eliminar</a>
                                             </td>
                                         </tr>
                                     @endforeach

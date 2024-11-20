@@ -23,17 +23,16 @@ class SessionsController extends Controller
     if (Auth::attempt($attributes)) {
         session()->regenerate();
 
-        // Redirección basada en el rol del usuario
-        $user = Auth::user(); // Obtiene el usuario autenticado
+        $user = Auth::user(); 
         switch ($user->userType) {
             case 'Administrador':
-                return redirect('/admin/tables')->with(['success' => 'Welcome, Admin!']);
+                return redirect('/dashboard');
             case 'Cliente':
-                return redirect('/cliente/dashboard')->with(['success' => 'Welcome, Client!']);
+                return redirect('/shop');
             case 'Trabajador':
-                return redirect('/trabajador/dashboard')->with(['success' => 'Welcome, Worker!']);
+                return redirect('/dashboard');
             default:
-                return redirect('/dashboard')->with(['success' => 'You are logged in.']);
+                return redirect('/dashboard');
         }
     } else {
         return back()->withErrors(['email' => 'Email or password invalid.']);

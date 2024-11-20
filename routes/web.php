@@ -38,6 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('profile');
 	})->name('profile');
 
+	Route::get('shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
+	Route::get('shopAdd', [App\Http\Controllers\ShopController::class, 'add'])->name('Agregar Producto');
+
+
 	Route::get('rtl', function () {
 		return view('rtl');
 	})->name('rtl');
@@ -45,10 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('user-management', function () {
 		return view('laravel-examples/user-management');
 	})->name('user-management');
-
-	Route::get('tables', function () {
-		return view('tables');
-	})->name('tables');
 
     Route::get('virtual-reality', function () {
 		return view('virtual-reality');
@@ -106,3 +106,6 @@ Route::middleware(['role:Admin'])->group(function () {
 Route::middleware(['role:trabajador'])->group(function () {
     // Route::get('/trabajador/dashboard', [TrabajadorController::class, 'dashboard']);
 });
+
+Route::get('tables', [App\Http\Controllers\TablesController::class, 'index'])->name('tables');
+

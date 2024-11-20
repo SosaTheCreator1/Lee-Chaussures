@@ -10,6 +10,7 @@
   <hr class="horizontal dark mt-0">
   <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">
     <ul class="navbar-nav">
+    @if(Auth::check() && Auth::user()->userType === 'Administrador' or Auth::user()->userType === 'Trabajador')
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('dashboard') ? 'active' : '') }}" href="{{ url('dashboard') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -30,9 +31,8 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
-      <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Laravel Examples</h6>
-      </li>
+      @endif
+
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('user-profile') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -54,6 +54,7 @@
             <span class="nav-link-text ms-1">Configuracion Usuario</span>
         </a>
       </li>
+      @if(Auth::check() && Auth::user()->userType === 'Administrador' or Auth::user()->userType === 'Trabajador')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('user-management') ? 'active' : '') }}" href="{{ url('user-management') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -62,9 +63,9 @@
             <span class="nav-link-text ms-1">User Management</span>
         </a>
       </li>
-      <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Example pages</h6>
-      </li>
+      @endif
+      
+      @if(Auth::check() && Auth::user()->userType === 'Administrador')
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('tables') ? 'active' : '') }}" href="{{ url('tables') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -85,6 +86,8 @@
           <span class="nav-link-text ms-1">Tables</span>
         </a>
       </li>
+      @endif
+      @if(Auth::check() && Auth::user()->userType === 'Cliente')
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('billing') ? 'active' : '') }}" href="{{ url('billing') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -105,10 +108,9 @@
           <span class="nav-link-text ms-1">Facturas</span>
         </a>
       </li>
-      <li class="nav-item mt-3">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Cuenta</h6>
-      </li>
-      <li class="nav-item">
+      @endif
+
+      <!-- <li class="nav-item">
         <a class="nav-link {{ (Request::is('profile') ? 'active' : '') }}" href="{{ url('profile') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -128,7 +130,7 @@
           </div>
           <span class="nav-link-text ms-1">Profile</span>
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
 </aside>
