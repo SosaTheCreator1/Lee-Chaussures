@@ -8,6 +8,7 @@ use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
@@ -109,3 +110,20 @@ Route::middleware(['role:trabajador'])->group(function () {
 
 Route::get('tables', [App\Http\Controllers\TablesController::class, 'index'])->name('tables');
 
+Route::get('/usuarios/activos', [UserController::class, 'usuarios']);
+
+
+
+// 
+Route::get('/test-procedures', function () {
+    // Llamada al procedimiento de inserción
+    DB::statement('CALL sp_ins_cli_yair(?, ?, ?, ?, ?, ?, ?, ?)', [
+        'John', 'Doe', 'securepassword', 'john@example.com', '1234567890', 'NYC', 'Hello world', 'active'
+    ]);
+
+    // Llamada al procedimiento de obtención
+    $users = DB::select('CALL sp_get_cli_yair()');
+
+    return response()->json($users); // Devuelve los datos como JSON para comprobar
+});
+// 
