@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('lastName')->nullable();
             $table->string('email');
-            $table->string('password');
+            $table->string('password')->nullable(); // Permite que el campo 'password' sea nulo
             $table->bigInteger('phone')->nullable();
             $table->string('location')->nullable();
             $table->string('about_me')->nullable();
