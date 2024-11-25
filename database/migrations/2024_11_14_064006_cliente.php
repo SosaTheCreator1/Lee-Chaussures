@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create("cliente", function (Blueprint $table) {
             $table->bigIncrements("id");
             $table->unsignedBigInteger('userId');
-            $table->boolean('status')->default(true);
-            $table->foreign('userId')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->enum('status',['Activo','Inactivo'])->nullable()->default('Activo');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->rememberToken();
         });
     }

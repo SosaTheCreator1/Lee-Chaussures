@@ -46,7 +46,7 @@
                                         <td class="align-middle text-center text-sm">
                                             <span
                                                 class="badge badge-sm {{ $user->status ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">
-                                                {{ $user->status ? 'Online' : 'Offline' }}
+                                                {{ $user->status ? 'Activo' : 'Inactivo' }}
                                             </span>
                                         </td>
                                         <td class="align-middle text-center">
@@ -121,8 +121,9 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $client->email }}</p>
                                         </td>
                                         <td class="align-middle text text-sm">
-                                            <span class="badge badge-sm {{ $client->status ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">
-                                                {{ $client->status ? 'Online' : 'Offline' }}
+                                            <span
+                                                class="badge badge-sm {{ $user->status ? 'bg-gradient-success' : 'bg-gradient-secondary' }}">
+                                                {{ $user->status ? 'Activo' : 'Inactivo' }}
                                             </span>
                                         </td>
                                         <td class="align-middle text-center">

@@ -50,16 +50,17 @@ class TablesController extends Controller
         ]);
 
         DB::statement('CALL sp_up_cli_yair(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-            $id,  // El id debe ser el primer parámetro
+            $id,
             $request->input('name'),
             $request->input('lastName'),
-            $request->input('password'),
+            $request->filled('password') ? bcrypt($request->input('password')) : null, // Solo aplica bcrypt si hay contraseña
             $request->input('email'),
             $request->input('phone'),
             $request->input('location'),
             $request->input('about_me'),
             $request->input('status'),
         ]);
+        
         return redirect()->route('tables')->with('success', 'Usuario actualizado con éxito.');
     }
 
