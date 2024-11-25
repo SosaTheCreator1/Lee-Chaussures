@@ -17,8 +17,8 @@ return new class extends Migration
 
             $table->id('idVenta'); 
             $table->date('fecha'); 
-            $table-foreignIdFor(Cliente::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table-foreignIdFor(Empleado::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate(); 
+            $table->foreignId('cliente_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('empleado_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->double('total', 8, 2);
             $table->timestamps();
 
