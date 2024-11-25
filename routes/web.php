@@ -6,6 +6,7 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TablesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -40,14 +41,31 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('profile');
 	})->name('profile');
 
-	Route::get('shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
-	Route::get('shopAdd', [App\Http\Controllers\ShopController::class, 'add'])->name('Agregar Producto');
+	// Route::get('shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
+	// Route::get('shopAdd', [App\Http\Controllers\ShopController::class, 'add'])->name('Agregar Producto');
 
-	Route::get('tables', [App\Http\Controllers\TablesController::class, 'index'])->name('tables');
-	Route::get('/tables/edit/{id}', [TablesController::class, 'editar'])->name('tablesEdit');
-	Route::post('/tables/edit/{id}', [TablesController::class, 'update'])->name('tablesUpdate');
-	Route::delete('/tables/{id}', [TablesController::class, 'destroy'])->name('deleteUser');
-	Route::get('/user/{id}', [TablesController::class, 'show'])->name('tablesShow');
+	Route::prefix('tables')->group(function () {
+		Route::get('/', [TablesController::class, 'index'])->name('tables');
+		Route::get('/new', [TablesController::class, 'create'])->name('tablesCreate');
+		Route::post('/store', [TablesController::class, 'store'])->name('tablesStore');
+		Route::get('/edit/{id}', [TablesController::class, 'editar'])->name('tablesEdit');
+		Route::post('/edit/{id}', [TablesController::class, 'update'])->name('tablesUpdate');
+		Route::delete('/{id}', [TablesController::class, 'destroy'])->name('deleteUser');
+		Route::get('/{id}', [TablesController::class, 'show'])->name('tablesShow');
+	});
+
+	Route::prefix('Shop')->group(function(){
+		Route::get('/', [ShopController::class, 'index'])->name('Shop');
+		Route::get('/new', [ShopController::class, 'create'])->name('ShopAdd');
+		Route::post('/store', [ShopController::class, 'store'])->name('ShopStore');
+		Route::get('/edit/{id}', [ShopController::class, 'editar'])->name('ShopEdit');
+		Route::post('/edit/{id}', [ShopController::class, 'update'])->name('ShopUpdate');
+		Route::delete('/{id}', [ShopController::class, 'destroy'])->name('deleteShop');
+		Route::get('/{id}', [ShopController::class, 'show'])->name('ShopShow');
+	});
+	
+	
+
 
 
 	Route::get('rtl', function () {

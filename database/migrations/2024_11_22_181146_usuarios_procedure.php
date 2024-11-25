@@ -14,21 +14,23 @@ return new class extends Migration
     {
         // Procedimiento para insertar
         DB::unprepared('
-            CREATE PROCEDURE sp_ins_cli_yair(
-                IN p_name VARCHAR(30),
-                IN p_lastName VARCHAR(30),
-                IN p_password VARCHAR(50),
-                IN p_email VARCHAR(50),
-                IN p_phone VARCHAR(20),
-                IN p_location VARCHAR(100),
-                IN p_about_me VARCHAR(255),
-                IN p_status VARCHAR(50)
-            )
-            BEGIN
-                INSERT INTO users (`name`, `lastName`, `email`, `password`, `phone`, `location`, `about_me`, `status`) 
-                VALUES (p_name, p_lastName, p_email, p_password, p_phone, p_location, p_about_me, p_status);
-            END;
+        CREATE PROCEDURE sp_ins_cli_yair(
+            IN p_name VARCHAR(30),
+            IN p_lastName VARCHAR(30),
+            IN p_password VARCHAR(255),
+            IN p_email VARCHAR(50),
+            IN p_phone VARCHAR(20),
+            IN p_location VARCHAR(100),
+            IN p_about_me VARCHAR(255),
+            IN p_status VARCHAR(50),
+            IN p_userType VARCHAR(50)
+        )
+        BEGIN
+            INSERT INTO users (`name`, `lastName`, `email`, `password`, `phone`, `location`, `about_me`, `status`, `userType`) 
+            VALUES (p_name, p_lastName, p_email, p_password, p_phone, p_location, p_about_me, p_status, p_userType);
+        END;
         ');
+
 
         // Procedimiento para actualizar
         DB::unprepared('
@@ -36,7 +38,7 @@ return new class extends Migration
                 IN p_id INT,
                 IN p_name VARCHAR(30),
                 IN p_lastName VARCHAR(30),
-                IN p_password VARCHAR(50),
+                IN p_password VARCHAR(255),
                 IN p_email VARCHAR(50),
                 IN p_phone VARCHAR(20),
                 IN p_location VARCHAR(100),

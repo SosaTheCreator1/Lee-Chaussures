@@ -6,8 +6,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header pb-0">
+                    <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Tabla de empleados</h6>
+                        <a href="{{ route('tablesCreate') }}" class="btn btn-primary">Nuevo Empleado</a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -34,7 +35,10 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
+                                            <p class="text-xs font-weight-bold mb-0 text-truncate" style="max-width: 200px;">
+                                                {{ $user->email }}
+                                            </p>
+
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $user->phone }}</p>
@@ -124,10 +128,14 @@
                                         <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($client->created_at)->format('d/m/y') }}</span>
                                         </td>
-                                        <td class="align-middle">
-                                            <a href="{{ route('tables', $client->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> Editar</a>
+                                        <td class="align">
+                                            <a href="{{ route('tablesEdit', ['id' => $client->id]) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user"> Edit</a>
                                             <a href="" class="text-secondary font-weight-bold text-xs"> | </a>
-                                            <a class="text-secondary font-weight-bold text-xs"> Eliminar</a>
+                                            <form action="{{ route('deleteUser', $client->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="#" class="text-secondary font-weight-bold text-xs" onclick="event.preventDefault(); this.closest('form').submit();">Eliminar</a>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach

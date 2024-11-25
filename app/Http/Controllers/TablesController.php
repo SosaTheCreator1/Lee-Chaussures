@@ -39,24 +39,21 @@ class TablesController extends Controller
             return redirect()->back()->withErrors('El usuario no existe.');
         }
 
-        return view('tablesEdit', compact('usuario')); // Cambia esto para que apunte a la vista de edición
+        return view('tablesEdit', compact('usuario'));
     }
 
     public function update(Request $request, $id)
     {
-        // Validación de los datos
         $request->validate([
             'name' => 'required|string|max:30',
             'lastName' => 'required|string|max:30',
-            // Añade más validaciones según tus necesidades
         ]);
 
-        // Actualizar el usuario usando el procedimiento almacenado
         DB::statement('CALL sp_up_cli_yair(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $id,  // El id debe ser el primer parámetro
             $request->input('name'),
             $request->input('lastName'),
-            $request->input('password'),  // Asegúrate de manejar la contraseña adecuadamente
+            $request->input('password'),
             $request->input('email'),
             $request->input('phone'),
             $request->input('location'),
@@ -68,23 +65,53 @@ class TablesController extends Controller
 
     public function destroy($id)
     {
-        // Llamar al procedimiento almacenado para eliminar el usuario
         DB::statement('CALL sp_del_cli_yair(?)', [$id]);
-
-        // Redirigir a la vista principal con un mensaje de éxito
         return redirect()->route('tables')->with('success', 'Usuario eliminado con éxito.');
     }
 
     public function show($id)
     {
-        // Llamar al procedimiento almacenado para obtener la información del usuario
         $usuario = DB::select('CALL sp_get_cli_yair()');
         $usuario = collect($usuario)->firstWhere('id', $id);
 
         if (!$usuario) {
             return redirect()->route('tables')->withErrors('El usuario no existe.');
         }
-        // Retornar la vista show.blade.php con los datos del usuario
         return view('tablesShow', compact('usuario'));
+    }
+
+    public function create()
+    {
+        return view('tablesNewUser');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:30',
+            'lastName' => 'required|string|max:30',
+            'email' => 'required|email|max:50',
+            'password' => 'required|string|min:6',
+            'phone' => 'nullable|string|max:20',
+            'location' => 'nullable|string|max:100',
+            'about_me' => 'nullable|string|max:255',
+            'status' => 'required|string|max:50',
+            'userType' => 'required|string|in:Cliente,Administrador,Trabajador',
+        ]);
+
+        // Llamada al procedimiento almacenado para insertar
+        DB::select('CALL sp_ins_cli_yair(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            $request->name,
+            $request->lastName,
+            bcrypt($request->password),
+            $request->email,
+            $request->phone,
+            $request->location,
+            $request->about_me,
+            $request->status,
+            $request->userType,  // Aquí se pasa el valor de userType
+        ]);
+
+        return redirect()->route('tables')->with('success', 'Usuario creado correctamente');
     }
 }

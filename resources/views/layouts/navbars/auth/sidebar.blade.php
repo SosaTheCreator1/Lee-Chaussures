@@ -33,7 +33,7 @@
       </li>
       @endif
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('user-profile') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -53,14 +53,14 @@
             </div>
             <span class="nav-link-text ms-1">Configuracion Usuario</span>
         </a>
-      </li>
+      </li> -->
       @if(Auth::check() && Auth::user()->userType === 'Administrador' or Auth::user()->userType === 'Trabajador')
       <li class="nav-item pb-2">
-        <a class="nav-link {{ (Request::is('user-management') ? 'active' : '') }}" href="{{ url('user-management') }}">
+        <a class="nav-link {{ (Request::is('Shop') ? 'active' : '') }}" href="{{ url('Shop') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('user-management') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+                <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('Shop') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
             </div>
-            <span class="nav-link-text ms-1">User Management</span>
+            <span class="nav-link-text ms-1">Producto</span>
         </a>
       </li>
       @endif
@@ -83,7 +83,7 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Tables</span>
+          <span class="nav-link-text ms-1">Usuarios</span>
         </a>
       </li>
       @endif

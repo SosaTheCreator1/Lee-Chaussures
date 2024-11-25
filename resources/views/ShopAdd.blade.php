@@ -7,26 +7,28 @@
             <h6 class="mb-0">{{ __('Agregar producto') }}</h6>
         </div>
         <div class="card-body pt-4 p-3">
-            <form action="/user-profile" method="POST" role="form text-left">
+            <form action="{{ route('ShopStore') }}" method="POST" role="form text-left">
                 @csrf
+                <!-- Mensajes de error -->
                 @if($errors->any())
-                    <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
-                        <span class="alert-text text-white">
-                            {{$errors->first()}}</span>
+                    <div class="mt-3 alert alert-primary alert-dismissible fade show" role="alert">
+                        <span class="alert-text text-white">{{ $errors->first() }}</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                             <i class="fa fa-close" aria-hidden="true"></i>
                         </button>
                     </div>
                 @endif
+
+                <!-- Mensaje de éxito -->
                 @if(session('success'))
-                    <div class="m-3  alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
-                        <span class="alert-text text-white">
-                            {{ session('success') }}</span>
+                    <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+                        <span class="alert-text text-white">{{ session('success') }}</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                             <i class="fa fa-close" aria-hidden="true"></i>
                         </button>
                     </div>
                 @endif
+
                 <div class="row">
                     <!-- Campo Nombre -->
                     <div class="col-md-6">
@@ -44,8 +46,8 @@
                     <!-- Campo Descripción -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="descripcion" class="form-control-label">{{ __('Descripción') }}</label>
-                            <input class="form-control @error('descripcion') border border-danger rounded-3 @enderror"
+                            <label for="descripcion" class="form-control-label">{{ __('Modelo') }}</label>
+                            <input class="form-control @error('Modelo') border border-danger rounded-3 @enderror"
                                 type="text" placeholder="Descripción del producto" id="descripcion" name="descripcion"
                                 value="{{ old('descripcion') }}">
                             @error('descripcion')
@@ -54,6 +56,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <!-- Campo Talla -->
                     <div class="col-md-6">
@@ -81,6 +84,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <!-- Campo Stock -->
                     <div class="col-md-6">
@@ -108,11 +112,13 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Botón de guardar -->
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Guardar cambios' }}</button>
                 </div>
             </form>
         </div>
     </div>
-
-    @endsection
+</div>
+@endsection

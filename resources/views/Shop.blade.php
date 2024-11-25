@@ -2,24 +2,53 @@
 
 @section('content')
 <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Tienda de Vestidos</h1>
+    <div class="container-fluid py-4">
         <div class="row">
-            @foreach ($productos as $producto)
-            <div class="col-md-4">
-                <div class="card">
-                    <!-- Ruta de la imagen generada dinámicamente -->
-                    <img src="{{ asset('assets/img/shop/' . $producto->id . '.jpg') }}" class="card-img-top" alt="{{ $producto->nombre }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $producto->nombre }}</h5>
-                        <p class="card-text">{{ $producto->descripcion }}</p>
-                        <p class="card-text">Precio: ${{ $producto->precio }}</p>
-                        <p class="card-text">Talla: {{ $producto->talla }}</p>
-                        <p class="card-text">Stock: {{ $producto->stock }}</p>
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                        <h6>Tabla de Productos</h6>
+                        <a href="{{ route('ShopAdd') }}" class="btn btn-primary">Nuevo Producto</a>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Descripción</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Talla</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($productos as $producto)
+                                    <tr>
+                                        <td>
+                                        <div class="d-flex flex-column justify-content-center">
+                                                    <a href="{{ route('ShopShow', ['id' => $producto->id]) }}" class="mb-0 text-sm">{{ $producto->nombre }}</a>
+                                                </div>
+                                            </td>
+                                        <td class="align-middle text-center">{{ $producto->descripcion }}</td>
+                                        <td class="align-middle text-center">{{ $producto->precio }}</td>
+                                        <td class="align-middle text-center">{{ $producto->talla }}</td>
+                                        <td class="align-middle text-center">
+                                            <a href="{{ route('ShopEdit', $producto->id) }}" class="text-secondary font-weight-bold text-xs">Editar</a> |
+                                            <form action="{{ route('deleteShop', $producto->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="#" class="text-secondary font-weight-bold text-xs" onclick="event.preventDefault(); this.closest('form').submit();">Eliminar</a>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            @endforeach
         </div>
     </div>
 </main>
